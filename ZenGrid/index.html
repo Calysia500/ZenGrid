@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenGrid • Habit Tracker</title>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-main">
+                <div class="logo-area">
+                    <span class="logo-dot"></span>
+                    <h1>ZenGrid</h1>
+                </div>
+                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+                    <!-- Sun Icon (visible in Dark mode) -->
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <!-- Moon Icon (visible in Light mode) -->
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="subtitle">Consistency over intensity. Visualizing daily progress.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Sidebar -->
+            <aside class="app-sidebar">
+                <!-- Add Habit Card -->
+                <section class="card sidebar-card" id="add-habit-section">
+                    <h2>New Habit</h2>
+                    <form id="add-habit-form" class="habit-form-vertical">
+                        <div class="form-field">
+                            <label for="habit-name-input">Habit Name</label>
+                            <input type="text" id="habit-name-input" placeholder="e.g. Morning Meditation..." required maxlength="40" autocomplete="off">
+                        </div>
+                        <div class="form-field">
+                            <label for="habit-goal-input">Target Goal (days)</label>
+                            <div class="goal-input-wrapper">
+                                <input type="number" id="habit-goal-input" value="30" min="1" max="365" required>
+                                <div class="goal-pills">
+                                    <button type="button" class="goal-pill" data-val="21">21d</button>
+                                    <button type="button" class="goal-pill active" data-val="30">30d</button>
+                                    <button type="button" class="goal-pill" data-val="66">66d</button>
+                                    <button type="button" class="goal-pill" data-val="100">100d</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary-wide">
+                            Add Habit
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Statistics Card -->
+                <section class="card sidebar-card" id="stats-section">
+                    <h2>Analytics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Completion Today</span>
+                            <span class="stat-value" id="stat-completion">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Active Habits</span>
+                            <span class="stat-value" id="stat-active">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Check-ins</span>
+                            <span class="stat-value" id="stat-total">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Longest Streak</span>
+                            <span class="stat-value" id="stat-streak">0d</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Data / Settings Card -->
+                <section class="card sidebar-card" id="settings-section">
+                    <h2>Data & Portability</h2>
+                    <div class="settings-actions">
+                        <button id="btn-export" class="btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Export Backup
+                        </button>
+                        <button id="btn-import-trigger" class="btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Import Backup
+                        </button>
+                        <input type="file" id="import-file-input" accept=".json" style="display: none;">
+                        <button id="btn-reset" class="btn-danger">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                            Clear All Data
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Main Column (Habits List) -->
+            <section class="habits-column">
+                <div class="habits-header">
+                    <h2>My Routine</h2>
+                    <span class="habits-count" id="habits-counter">0 Habits</span>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="empty-state">
+                    <div class="empty-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3>No habits tracked yet</h3>
+                    <p>Start small. Consistency is built day by day. Enter an action in the sidebar to track it.</p>
+                </div>
+
+                <!-- Habits Container -->
+                <div id="habits-container" class="habits-list">
+                    <!-- Habits dynamically loaded here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>ZenGrid • Designed for clarity. LocalStorage encryption by default.</p>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
